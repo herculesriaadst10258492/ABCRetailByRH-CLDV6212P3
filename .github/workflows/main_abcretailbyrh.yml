@@ -4,35 +4,34 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout GitHub Action
         uses: actions/checkout@v4
 
-      - name: Setup .NET
+      - name: Setup .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: '8.0.x'
 
       - name: Restore dependencies
         run: dotnet restore ./ABCRetailByRH/ABCRetailByRH.csproj
 
       - name: Build
-        run: dotnet build ./ABCRetailByRH/ABCRetailByRH.csproj --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore ./ABCRetailByRH/ABCRetailByRH.csproj
 
       - name: Publish
-        run: dotnet publish ./ABCRetailByRH/ABCRetailByRH.csproj -c Release -o ./published
+        run: dotnet publish --configuration Release --output ./publish ./ABCRetailByRH/ABCRetailByRH.csproj
 
-      - name: Upload artifact for deployment
+      - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
-          name: webapp
-          path: ./published
+          name: .net-app
+          path: publish
 
   deploy:
     runs-on: ubuntu-latest
@@ -41,15 +40,19 @@ jobs:
       name: production
 
     steps:
-      - name: Download artifact
+      - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: webapp
-          path: ./published
+          name: .net-app
+          path: .
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          publish-profile: ${{ secrets.AZUREWEBAPP_PUBLISH_PROFILE }}
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
           app-name: abcretailbyrh
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: ./published
+          package: .
