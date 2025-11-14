@@ -1,0 +1,14 @@
+﻿@model ABCRetailByRH.Models.SectionHeaderModel
+
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-people"></i></div>
+
+    <div>
+        <h1 class="lux-page-title">@Model.Title</h1>
+        <p class="lux-page-sub">@Model.Subtitle</p>
+    </div>
+
+    <div class="ms-auto">
+        @Html.Raw(Model.RightHtml)
+    </div>
+</div>

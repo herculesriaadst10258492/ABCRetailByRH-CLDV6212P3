@@ -1,0 +1,81 @@
+﻿@model List<(string FileName, string OrderId, string Customer)>
+@{
+    ViewData["Title"] = "Payment Proofs";
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-cloud-check-fill"></i></div>
+    <div>
+        <h1 class="lux-page-title">Payment Proofs</h1>
+        <p class="lux-page-sub">All customer-submitted proof of payment files</p>
+    </div>
+</div>
+
+<div class="card-dark p-4 mt-3">
+
+    @if (TempData["Message"] is string msg)
+    {
+        <div class="alert-slim mb-3">@msg</div>
+    }
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="4" class="text-center text-secondary py-4">
+                            <i class="bi bi-folder-x" style="font-size:2rem;"></i>
+                            <div>No Payment Proofs Found</div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.FileName</td>
+                            <td class="text-accent fw-semibold">@item.OrderId</td>
+                            <td>@item.Customer</td>
+
+                            <td class="text-end">
+
+                                <!-- DOWNLOAD -->
+                                <a class="btn btn-sm btn-outline-light me-1"
+                                   asp-action="Download" asp-route-name="@item.FileName">
+                                    <i class="bi bi-download"></i>
+                                </a>
+
+                                <!-- DELETE -->
+                                <form asp-action="AdminDelete"
+                                      method="post"
+                                      class="d-inline">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="name" value="@item.FileName" />
+                                    <input type="hidden" name="orderId" value="@item.OrderId" />
+
+                                    <button class="btn btn-sm btn-outline-danger"
+                                            onclick="return confirm('Delete this proof of payment?');">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

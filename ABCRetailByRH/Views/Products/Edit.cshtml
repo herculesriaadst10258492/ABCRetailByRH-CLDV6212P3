@@ -1,0 +1,60 @@
+﻿@model ABCRetailByRH.Models.Product
+@{
+    ViewData["Title"] = "Edit Product";
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-pencil-square"></i></div>
+    <div>
+        <h1 class="lux-page-title">Edit Product</h1>
+        <p class="lux-page-sub">Update product details</p>
+    </div>
+</div>
+
+<div class="card-dark p-4 mt-3">
+
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" name="id" value="@Model.RowKey" />
+
+        <div class="mb-3">
+            <label class="form-label text-secondary">Name</label>
+            <input asp-for="Name" class="form-control input-dark" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-secondary">Price</label>
+            <input asp-for="Price" type="number" step="0.01"
+                   class="form-control input-dark" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label text-secondary">Stock</label>
+            <input asp-for="Stock" type="number" class="form-control input-dark" />
+        </div>
+
+        <!-- CURRENT IMAGE -->
+        <div class="mb-3">
+            <label class="form-label text-secondary">Current Image</label>
+            <br />
+            @if (!string.IsNullOrWhiteSpace(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" class="mb-3 rounded" style="max-width:160px;" />
+            }
+            else
+            {
+                <span class="text-secondary">No image</span>
+            }
+
+            <input class="form-control input-dark mt-2"
+                   type="file" name="newImageFile" accept="image/*" />
+            <small class="text-secondary">Leave blank to keep existing image.</small>
+        </div>
+
+        <button class="btn btn-gold">Save</button>
+        <a asp-action="Index" class="btn btn-link text-secondary">Cancel</a>
+
+    </form>
+
+</div>

@@ -1,0 +1,61 @@
+﻿@model ABCRetailByRH.Models.AppUser
+@using ABCRetailByRH.Models
+
+@{
+    ViewData["Title"] = "Add Customer";
+
+    var header = new SectionHeaderModel(
+        Title: "Add Customer",
+        Subtitle: "Create a new registered customer",
+        RightHtml: $"<a href=\"{Url.Action("Index", "Customers")}\" class=\"btn btn-gold\">Back</a>"
+    );
+}
+
+@await Html.PartialAsync("_SectionHeader", header)
+
+<div class="container py-5" style="max-width:820px;">
+
+    <div class="card card-dark p-4">
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <form asp-action="Create" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="mb-3">
+                <label asp-for="Username" class="form-label text-light"></label>
+                <input asp-for="Username" class="form-control input-dark" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label text-light"></label>
+                <input asp-for="Email" class="form-control input-dark" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="mb-4">
+                <label asp-for="Phone" class="form-label text-light"></label>
+                <input asp-for="Phone" class="form-control input-dark" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Role" class="form-label text-light"></label>
+                <select asp-for="Role" class="form-control input-dark">
+                    <option value="Customer">Customer</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-gold px-4">Create Customer</button>
+            <a asp-action="Index" class="btn btn-outline-light px-4">Cancel</a>
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

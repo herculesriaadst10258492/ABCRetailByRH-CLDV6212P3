@@ -1,0 +1,111 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Customer Dashboard";
+
+    var name = Context.Session.GetString("UserName") ?? "Customer";
+    var role = Context.Session.GetString("UserRole") ?? "Customer";
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-person-fill"></i></div>
+    <div>
+        <h1 class="lux-page-title">Welcome, @name!</h1>
+        <p class="lux-page-sub">You are logged in as <strong>@role</strong>.</p>
+    </div>
+</div>
+
+<!-- ACTION CARDS -->
+<div class="row g-4 mt-3">
+
+    <!-- PRODUCTS -->
+    <div class="col-md-4">
+        <a asp-controller="Products" asp-action="Index" class="dash-card-link">
+            <div class="dash-card h-100">
+                <div class="dash-icon-wrap mb-3"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+                <h5 class="card-title d-flex align-items-center gap-2">
+                    <i class="bi bi-grid-3x3-gap dash-heading-icon"></i> Browse Products
+                </h5>
+                <p class="text-secondary">Explore curated pieces & add to your cart.</p>
+                <div class="dash-card-footer">
+                    Go to Products <i class="bi bi-arrow-right-short"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- CART -->
+    <div class="col-md-4">
+        <a asp-controller="Cart" asp-action="Index" class="dash-card-link">
+            <div class="dash-card h-100">
+                <div class="dash-icon-wrap mb-3"><i class="bi bi-bag-check-fill"></i></div>
+                <h5 class="card-title d-flex align-items-center gap-2">
+                    <i class="bi bi-bag-check dash-heading-icon"></i> My Cart
+                </h5>
+                <p class="text-secondary">Refine your cart before checkout.</p>
+                <div class="dash-card-footer">
+                    View My Cart <i class="bi bi-arrow-right-short"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="col-md-4">
+        <a asp-controller="Orders" asp-action="MyOrders" class="dash-card-link">
+            <div class="dash-card h-100">
+                <div class="dash-icon-wrap mb-3"><i class="bi bi-receipt-cutoff"></i></div>
+                <h5 class="card-title d-flex align-items-center gap-2">
+                    <i class="bi bi-receipt dash-heading-icon"></i> My Orders
+                </h5>
+                <p class="text-secondary">Track the status of your placed orders.</p>
+                <div class="dash-card-footer">
+                    View My Orders <i class="bi bi-arrow-right-short"></i>
+                </div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<!-- UTILITIES -->
+<div class="row g-3 mt-4">
+
+    <!-- UPLOAD PROOF -->
+    <div class="col-md-6">
+        <a asp-controller="Upload" asp-action="Index" class="dash-utility-link">
+            <div class="dash-utility card-dark d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-cloud-upload dash-utility-icon"></i>
+                    <div>
+                        <div class="dash-utility-title">Upload Payment Proof</div>
+                        <div class="dash-utility-sub text-secondary">Submit proof to finalize purchases.</div>
+                    </div>
+                </div>
+                <i class="bi bi-chevron-right"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- PRIVACY -->
+    <div class="col-md-6">
+        <a asp-controller="Home" asp-action="Privacy" class="dash-utility-link">
+            <div class="dash-utility card-dark d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="bi bi-shield-lock dash-utility-icon"></i>
+                    <div>
+                        <div class="dash-utility-title">View Privacy Policy</div>
+                        <div class="dash-utility-sub text-secondary">See how your data is protected.</div>
+                    </div>
+                </div>
+                <i class="bi bi-chevron-right"></i>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<form asp-controller="Login" asp-action="Logout" method="post" class="container my-4">
+    @Html.AntiForgeryToken()
+    <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+</form>

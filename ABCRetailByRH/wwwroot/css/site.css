@@ -1,0 +1,384 @@
+﻿/* ======================================================================
+   LUXURY DARK THEME — Dior × Balenciaga × Off-White aesthetic
+   ====================================================================== */
+
+:root {
+    --bg: #0a0a0a;
+    --panel: rgba(17, 18, 20, 0.82);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-glow: rgba(157, 125, 242, .22);
+    --card-glow: rgba(201, 192, 255, .16);
+    --ink: #e8e8e8;
+    --ink-strong: #ffffff;
+    --muted: #9c9c9c;
+    --soft: #131316;
+    --border: #1d1e20;
+    --accent: #c9c0ff;
+    --accent-mint: #23d5ab;
+    --accent-ink: #0a0a0a;
+    --focus: rgba(201, 192, 255, .32);
+    --card-bg: #111214;
+    --input-bg: #0f1114;
+    --input-border: rgba(255,255,255,.10);
+    --brand-weight: 700;
+    --letter-wide: .22em;
+}
+
+/* ======================================================================
+   GLOBAL
+   ====================================================================== */
+
+html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1180px;
+}
+
+h1, h2, h3 {
+    font-weight: 600;
+    letter-spacing: .04em;
+    color: var(--ink-strong);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+    a:hover {
+        opacity: .88;
+    }
+
+/* ======================================================================
+   NAVBAR
+   ====================================================================== */
+
+.lux-navbar {
+    backdrop-filter: blur(14px);
+    background: var(--panel);
+    border-bottom: 1px solid var(--glass-border);
+    padding-block: .75rem;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, .45);
+}
+
+.lux-brand {
+    color: var(--ink-strong) !important;
+    font-size: .92rem;
+    letter-spacing: var(--letter-wide);
+    font-weight: var(--brand-weight);
+    text-transform: uppercase;
+    opacity: .96;
+}
+
+.lux-link {
+    text-transform: uppercase;
+    letter-spacing: .11em;
+    font-size: .78rem;
+    opacity: .75;
+    color: var(--ink-strong) !important;
+    padding-inline: .95rem !important;
+}
+
+    .lux-link:hover {
+        opacity: 1;
+    }
+
+.lux-user-label {
+    color: var(--ink);
+    font-size: .82rem;
+    opacity: .9;
+}
+
+/* ======================================================================
+   AUTH NAV BUTTONS
+   ====================================================================== */
+
+.nav-auth-link {
+    color: var(--ink-strong) !important;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .11em;
+    margin-left: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+    .nav-auth-link:hover {
+        opacity: .82;
+    }
+
+.nav-auth-accent {
+    color: var(--accent-mint) !important;
+}
+
+/* ======================================================================
+   AUTH PAGES — Luxury Glass Card
+   ====================================================================== */
+
+/* ✔ FIXED: Removed gradients, pure black background matching the site */
+.auth-outer {
+    min-height: calc(100vh - 90px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 3rem !important; /* ✔ perfect height for Option A */
+    background: var(--bg) !important;
+}
+
+.auth-card {
+    width: 420px;
+    background: rgba(17, 18, 20, 0.65);
+    padding: 2.6rem 2.2rem;
+    border-radius: 26px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 10px 60px rgba(0,0,0,.55), 0 0 40px var(--glass-glow);
+    backdrop-filter: blur(28px);
+    text-align: center;
+}
+
+.auth-header {
+    margin-bottom: 2rem;
+}
+
+    .auth-header h2 {
+        color: var(--ink-strong);
+        font-weight: 700;
+    }
+
+    .auth-header p {
+        color: var(--muted);
+        margin-top: .4rem;
+    }
+
+.auth-icon {
+    font-size: 2.9rem;
+    color: var(--accent);
+    margin-bottom: .4rem;
+}
+
+.auth-field {
+    text-align: left;
+    margin-bottom: 1.2rem;
+}
+
+    .auth-field label {
+        font-size: .88rem;
+        color: var(--ink-strong);
+        margin-bottom: .4rem;
+        display: block;
+    }
+
+.auth-input {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: var(--input-bg);
+    color: var(--ink);
+    font-size: .92rem;
+}
+
+    .auth-input:focus {
+        box-shadow: 0 0 0 4px var(--focus);
+    }
+
+.auth-input-wrap {
+    position: relative;
+}
+
+.eye-btn {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--muted);
+}
+
+    .eye-btn:hover {
+        color: var(--ink-strong);
+    }
+
+.auth-btn {
+    width: 100%;
+    margin-top: .5rem;
+    padding: .9rem;
+    border-radius: 14px;
+    border: none;
+    font-size: .95rem;
+    font-weight: 600;
+    letter-spacing: .08em;
+    color: var(--accent-ink);
+    background: linear-gradient(90deg, var(--accent), var(--accent-mint));
+    cursor: pointer;
+}
+
+    .auth-btn:hover {
+        filter: brightness(1.08);
+    }
+
+.auth-footer {
+    margin-top: 1.4rem;
+}
+
+    .auth-footer a {
+        color: var(--accent);
+        font-size: .9rem;
+    }
+/* ============================================================
+   CART PAGE — MODERN LUXURY LAYOUT
+   ============================================================ */
+
+.cart-row {
+    border: 1px solid var(--glass-border);
+    border-radius: 18px;
+    background: var(--panel);
+    box-shadow: 0 0 20px rgba(0,0,0,.35);
+}
+
+.cart-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.qty-control {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.qty-btn {
+    background: var(--panel);
+    border: 1px solid var(--glass-border);
+    padding: 4px 12px;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    color: var(--ink);
+}
+
+    .qty-btn:hover {
+        background: var(--glass-border);
+    }
+
+.qty-display {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ink-strong);
+}
+
+.empty-cart {
+    margin-top: 4rem;
+}
+
+.empty-cart-icon {
+    font-size: 4rem;
+    color: var(--accent);
+    opacity: .9;
+}
+
+.confirm-card {
+    max-width: 480px;
+    margin: 5rem auto;
+    background: var(--panel);
+    border: 1px solid var(--glass-border);
+    padding: 3rem 2rem;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 0 40px rgba(0,0,0,.5);
+}
+
+.confirm-icon {
+    font-size: 3rem;
+    color: #ffae42;
+    margin-bottom: 1rem;
+}
+/* ============================================================
+   PREMIUM STATUS BADGES (Dior / Off-White Gradient Chips)
+   ============================================================ */
+
+.badge-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.03em;
+    border: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.35);
+    color: #0a0a0a !important;
+}
+
+/* SUBMITTED - YELLOW */
+.status-submitted {
+    background: linear-gradient(135deg, #ffe88a, #f7d34a);
+    color: #3c3100 !important;
+    box-shadow: 0 4px 16px rgba(255, 224, 98, 0.35);
+}
+
+/* PROCESSING - BLUE */
+.status-processing {
+    background: linear-gradient(135deg, #7ab8ff, #3c8cef);
+    color: #0a1f3d !important;
+    box-shadow: 0 4px 16px rgba(90, 150, 255, 0.35);
+}
+
+/* COMPLETED - GREEN */
+.status-completed {
+    background: linear-gradient(135deg, #7affc3, #28e7a1);
+    color: #003321 !important;
+    box-shadow: 0 4px 16px rgba(80, 255, 180, 0.35);
+}
+
+/* CANCELLED - RED */
+.status-cancelled {
+    background: linear-gradient(135deg, #ff9b9b, #e45050);
+    color: #330000 !important;
+    box-shadow: 0 4px 16px rgba(255, 120, 120, 0.35);
+}
+/* ============================================================
+   DARK CARD COMPONENT — used for all CRUD pages
+   ============================================================ */
+
+.card-dark {
+    background: var(--card-bg) !important;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 2rem;
+    color: var(--ink-strong);
+    box-shadow: 0 10px 40px rgba(0,0,0,.45);
+}
+
+/* Force Bootstrap card override */
+.card {
+    background: none !important;
+    border: none !important;
+}
+
+/* ============================================================
+   DARK INPUTS — match product edit theme
+   ============================================================ */
+
+.input-dark {
+    background: var(--input-bg) !important;
+    color: var(--ink) !important;
+    border: 1px solid var(--input-border) !important;
+    border-radius: 10px !important;
+    padding: .75rem 1rem !important;
+}
+
+    .input-dark:focus {
+        outline: none !important;
+        box-shadow: 0 0 0 4px var(--focus) !important;
+        border-color: var(--accent) !important;
+    }

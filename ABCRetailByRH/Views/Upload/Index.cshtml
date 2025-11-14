@@ -1,0 +1,118 @@
+﻿@model List<string>
+@using Microsoft.AspNetCore.Html
+
+@{
+    ViewData["Title"] = "Upload Payment Proof";
+
+    var orders = ViewBag.Orders as List<dynamic>;
+    string? selected = ViewBag.SelectedOrderId as string;
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-cloud-upload-fill"></i></div>
+    <div>
+        <h1 class="lux-page-title">Upload Payment Proof</h1>
+        <p class="lux-page-sub">Submit proof for your selected order</p>
+    </div>
+</div>
+
+<div class="card-dark p-4 mt-3">
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert-slim mb-3">@ViewBag.Message</div>
+    }
+
+    <form asp-action="Index" method="post" enctype="multipart/form-data" class="mb-4">
+        @Html.AntiForgeryToken()
+
+        <!-- ORDER SELECTOR -->
+        @if (string.IsNullOrWhiteSpace(selected))
+        {
+            <label class="form-label fw-semibold text-light">Select Order</label>
+
+            @if (orders == null || !orders.Any())
+            {
+                <!-- SAFE: Prevent crash -->
+                <div class="text-secondary fst-italic mb-2">
+                    You have no orders available for proof submission.
+                </div>
+                <select name="orderId" class="form-select input-dark mb-3" disabled>
+                    <option>No Orders Found</option>
+                </select>
+            }
+            else
+            {
+                <select name="orderId" class="form-select input-dark mb-3" required>
+                    <option value="">-- Choose Order --</option>
+                    @foreach (var o in orders)
+                    {
+                        <option value="@o.OrderId">
+                            @o.OrderId — R @o.Total — @o.Date.ToString("yyyy-MM-dd")
+                        </option>
+                    }
+                </select>
+            }
+        }
+        else
+        {
+            <!-- Prefilled (coming from MyOrders Upload Proof button) -->
+            <input type="hidden" name="orderId" value="@selected" />
+            <div class="mb-3 text-accent fw-semibold">
+                Uploading proof for Order <span class="text-light">@selected</span>
+            </div>
+        }
+
+        <!-- FILE UPLOAD -->
+        <label class="form-label fw-semibold text-light">Select File</label>
+        <input type="file" name="file" class="form-control input-dark" required />
+
+        <button class="btn btn-gold mt-3" type="submit">
+            <i class="bi bi-cloud-arrow-up"></i> Upload
+        </button>
+    </form>
+
+    <h5 class="mb-3 text-light">Your Uploaded Files</h5>
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover mb-0">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="2" class="text-center text-secondary py-4">
+                            <i class="bi bi-folder-x" style="font-size:2rem;"></i>
+                            <div>No files uploaded yet.</div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var f in Model)
+                    {
+                        <tr>
+                            <td>@f</td>
+
+                            <td class="text-end">
+                                <a class="btn btn-sm btn-outline-light"
+                                   asp-action="Download" asp-route-name="@f">
+                                    <i class="bi bi-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+</div>

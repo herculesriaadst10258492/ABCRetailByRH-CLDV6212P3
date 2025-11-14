@@ -1,0 +1,83 @@
+﻿@model ABCRetailByRH.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="auth-outer">
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <i class="bi bi-person-plus-fill auth-icon"></i>
+            <h2>Create Account</h2>
+            <p>Join the ABC Retailers experience</p>
+        </div>
+
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="auth-field">
+                <label>Username</label>
+                <input asp-for="Username" class="auth-input" autocomplete="off" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label>Email</label>
+                <input asp-for="Email" class="auth-input" autocomplete="off" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label>Phone</label>
+                <input asp-for="Phone" class="auth-input" autocomplete="off" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label>Role</label>
+                <select asp-for="Role" class="auth-input">
+                    <option value="Customer">Customer</option>
+                    <option value="Admin">Admin</option>
+                </select>
+            </div>
+
+            <div class="auth-field">
+                <label>Password</label>
+                <div class="auth-input-wrap">
+                    <input asp-for="Password" id="pwd1" type="password" class="auth-input" autocomplete="off" />
+                    <span class="eye-btn" onclick="togglePwd('pwd1')">
+                        <i class="bi bi-eye-fill"></i>
+                    </span>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="auth-field">
+                <label>Confirm Password</label>
+                <div class="auth-input-wrap">
+                    <input asp-for="ConfirmPassword" id="pwd2" type="password" class="auth-input" autocomplete="off" />
+                    <span class="eye-btn" onclick="togglePwd('pwd2')">
+                        <i class="bi bi-eye-fill"></i>
+                    </span>
+                </div>
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <button class="auth-btn">Register</button>
+        </form>
+
+        <div class="auth-footer">
+            <a asp-action="Login">Already have an account? Sign In</a>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePwd(id) {
+            const el = document.getElementById(id);
+            el.type = el.type === "password" ? "text" : "password";
+        }
+    </script>
+}

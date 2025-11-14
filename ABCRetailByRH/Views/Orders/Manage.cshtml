@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ABCRetailByRH.Controllers.OrdersController.GroupedOrderVm>
+
+@{
+    ViewData["Title"] = "Manage Orders";
+}
+
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-clipboard-check"></i></div>
+    <div>
+        <h1 class="lux-page-title">All Orders</h1>
+        <p class="lux-page-sub">Review and process customer orders</p>
+    </div>
+</div>
+
+@if (TempData["Msg"] is string m)
+{
+    <div class="alert-slim mt-3">@m</div>
+}
+
+<div class="orders-card mt-3">
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle mb-0">
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var o in Model)
+                {
+                    string statusClass = o.Status switch
+                    {
+                        "Submitted" => "badge-chip status-submitted",
+                        "Processing" => "badge-chip status-processing",
+                        "Completed" => "badge-chip status-completed",
+                        "Cancelled" => "badge-chip status-cancelled",
+                        _ => "badge-chip"
+                    };
+
+                    <tr>
+                        <td class="text-accent fw-semibold">@o.OrderId</td>
+                        <td>@o.Username</td>
+                        <td>@o.TotalItems item(s)</td>
+                        <td>R @o.TotalAmount</td>
+                        <td>@o.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</td>
+
+                        <td>
+                            <span class="@statusClass">@o.Status</span>
+                        </td>
+
+                        <td>
+                            <form asp-action="UpdateStatus" method="post" class="d-flex gap-2">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@o.OrderId" />
+
+                                <select name="status" class="form-select form-select-sm">
+                                    <option>Submitted</option>
+                                    <option>Processing</option>
+                                    <option>Completed</option>
+                                    <option>Cancelled</option>
+                                </select>
+
+                                <button class="btn btn-gold btn-sm">Update</button>
+                            </form>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+</div>

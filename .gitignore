@@ -1,0 +1,35 @@
+# VS / .NET
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build & publish artifacts
+**/Properties/PublishProfiles/
+*.Publish.xml
+*.pubxml
+*.pubxml.user
+*.zip
+*.tgz
+*.nupkg
+
+# Node (if present)
+node_modules/
+
+# Secrets (VERY IMPORTANT)
+# MVC app
+**/appsettings.json
+**/appsettings.Development.json
+**/secrets.json
+
+# Azure Functions
+**/local.settings.json
+
+# Certs/keys
+*.pfx
+*.cer
+*.snk

@@ -1,0 +1,88 @@
+﻿@model ABCRetailByRH.Models.HomeViewModel
+@using Microsoft.AspNetCore.Html
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+<!-- LUXURY HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-house-door-fill"></i></div>
+    <div>
+        <h1 class="lux-page-title">Welcome to ABC Retailers</h1>
+        <p class="lux-page-sub">Curated essentials. Premium Azure-backed experience.</p>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="text-center text-white py-5">
+    <h1 class="display-5 fw-bold">Timeless Pieces. Modern Craft.</h1>
+    <p class="lead text-secondary">Curated essentials with precision storage on Azure.</p>
+    <a class="btn btn-gold px-4 mt-2" asp-controller="Products" asp-action="Index">Shop Catalog</a>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<div class="card-dark p-0 mt-5">
+
+    @* SectionHeader replaced with luxury header — this is now global *@
+    <div class="lux-page-header p-4">
+        <div class="lux-page-icon"><i class="bi bi-stars"></i></div>
+        <div>
+            <h1 class="lux-page-title">Featured Products</h1>
+            <p class="lux-page-sub">Hand-picked items from the catalog</p>
+        </div>
+
+        <div class="ms-auto">
+            <a href="@Url.Action("Index", "Products")" class="btn btn-gold btn-sm">
+                View All
+            </a>
+        </div>
+    </div>
+
+    <div class="p-4">
+        <div class="row g-4">
+
+            @if (Model.FeaturedProducts != null && Model.FeaturedProducts.Any())
+            {
+                foreach (var p in Model.FeaturedProducts)
+                {
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <div class="glow-card h-100">
+
+                            <!-- PRODUCT IMAGE -->
+                            <div class="ratio ratio-4x3">
+                                <img class="img-fluid"
+                                     style="object-fit:cover; border-radius:14px;"
+                                     alt="@p.Name"
+                                     src="@(string.IsNullOrWhiteSpace(p.ImageUrl)
+                                                                          ? "https://dummyimage.com/800x600/222/fff.png&text=No+Image"
+                                                                          : p.ImageUrl)">
+                    </div>
+
+                            <!-- BODY -->
+                            <div class="p-3 d-flex flex-column">
+
+                                <h5 class="mb-1" style="color:var(--ink-strong);">@p.Name</h5>
+                                <span class="badge-chip mb-3">In stock: @p.Stock</span>
+
+                                <div class="mt-auto d-flex align-items-center justify-content-between">
+                                    <span class="fs-5 fw-semibold">R @p.Price.ToString("F2")</span>
+                                    <a class="btn btn-sm btn-gold"
+                                       asp-controller="Products"
+                                       asp-action="Details"
+                                       asp-route-id="@p.RowKey">
+                                        View
+                                    </a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                        }
+            }
+
+        </div>
+    </div>
+
+</div>

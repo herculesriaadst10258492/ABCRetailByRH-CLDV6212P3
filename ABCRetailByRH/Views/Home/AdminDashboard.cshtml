@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNetCore.Http
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    var name = Context.Session.GetString("UserName") ?? "Admin";
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-shield-lock-fill"></i></div>
+    <div>
+        <h1 class="lux-page-title">Welcome, @name</h1>
+        <p class="lux-page-sub">Full access to system controls and workflows</p>
+    </div>
+</div>
+
+<!-- ACTION CARDS (4 cards in one row now) -->
+<div class="row g-4 mt-3">
+
+    <!-- CUSTOMERS -->
+    <div class="col-md-3">
+        <a asp-controller="Customers" asp-action="Index" class="dash-card-link">
+            <div class="dash-card h-100">
+                <div class="dash-icon-wrap mb-3"><i class="bi bi-people-fill"></i></div>
+                <h5 class="card-title d-flex align-items-center gap-2">
+                    <i class="bi bi-people dash-heading-icon"></i> Customers
+                </h5>
+                <p class="text-secondary">Manage customer records stored in Azure Tables.</p>
+                <div class="dash-card-footer">Manage Customers <i class="bi bi-arrow-right-short"></i></div>
+            </div>
+        </a>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div class="col-md-3">
+        <a asp-controller="Products" asp-action="Index" class="dash-card-link">
+            <div class="dash-card h-100">
+                <div class="dash-icon-wrap mb-3"><i class="bi bi-box-seam-fill"></i></div>
+                <h5 class="card-title d-flex align-items-center gap-2">
+                    <i class="bi bi-box dash-heading-icon"></i> Manage Products
+                </h5>
+                <p class="text-secondary">Add products, upload images, manage stock.</p>
+                <div class="dash-card-footer">Product Control <i class="bi bi-arrow-right-short"></i></div>
+            </div>
+        </a>
+    </div>
+
+    <!-- MANAGE ORDERS -->
+    <div class="col-md-3">
+        <a asp-controller="Orders" asp-action="Manage" class="dash-card-link">
+            <div class="dash-card h-100">
+                <div class="dash-icon-wrap mb-3"><i class="bi bi-clipboard-check-fill"></i></div>
+                <h5 class="card-title d-flex align-items-center gap-2">
+                    <i class="bi bi-clipboard-check dash-heading-icon"></i> Manage Orders
+                </h5>
+                <p class="text-secondary">Review, process, complete, or cancel orders.</p>
+                <div class="dash-card-footer">Order Dashboard <i class="bi bi-arrow-right-short"></i></div>
+            </div>
+        </a>
+    </div>
+
+    <!-- NEW PAYMENT PROOFS CARD -->
+    <div class="col-md-3">
+        <a asp-controller="Upload" asp-action="Admin" class="dash-card-link">
+            <div class="dash-card h-100">
+                <div class="dash-icon-wrap mb-3"><i class="bi bi-cloud-check-fill"></i></div>
+                <h5 class="card-title d-flex align-items-center gap-2">
+                    <i class="bi bi-cloud-check dash-heading-icon"></i> Payment Proofs
+                </h5>
+                <p class="text-secondary">View and manage customer payment proof files.</p>
+                <div class="dash-card-footer">View Proofs <i class="bi bi-arrow-right-short"></i></div>
+            </div>
+        </a>
+    </div>
+
+</div>
+
+<form asp-controller="Login" asp-action="Logout" method="post" class="container my-4">
+    @Html.AntiForgeryToken()
+    <button class="btn btn-outline-danger btn-sm" type="submit">Logout</button>
+</form>

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ABCRetailByRH.Models.Product>
+@using Microsoft.AspNetCore.Html
+@using Microsoft.AspNetCore.Http
+
+@{
+    ViewData["Title"] = "Products";
+    var role = Context.Session.GetString("UserRole");
+}
+
+<!-- LUXURY PAGE HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+    <div>
+        <h1 class="lux-page-title">Products</h1>
+        <p class="lux-page-sub">Azure-powered product catalog</p>
+    </div>
+
+    <div class="ms-auto">
+        <a asp-action="Create" class="btn btn-outline-gold">Add Product</a>
+    </div>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="row g-4 mt-3">
+
+    @foreach (var p in Model)
+    {
+        <div class="col-12 col-sm-6 col-lg-4">
+            <div class="glow-card h-100">
+
+                <!-- IMAGE -->
+                <div class="ratio ratio-4x3 mb-2">
+                    <img src="@(string.IsNullOrWhiteSpace(p.ImageUrl)
+                                                                          ? "https://dummyimage.com/1000x800/202020/ffffff.png&text=No+Image"
+                                                                          : p.ImageUrl)"
+                     class="img-fluid rounded"
+                     style="object-fit:cover;">
+            </div>
+
+                <div class="p-3 d-flex flex-column">
+
+                    <h5 class="mb-1" style="color:var(--ink-strong);">@p.Name</h5>
+
+                    <p class="text-secondary mb-1">
+                        Price: <span class="text-light fw-semibold">R @p.Price</span>
+                    </p>
+
+                    <p class="text-secondary mb-3">
+                        Stock: <span class="text-light fw-semibold">@p.Stock</span>
+                    </p>
+
+                    <div class="mt-auto d-flex justify-content-between align-items-center">
+
+                        <a class="btn btn-sm btn-gold"
+                           asp-action="Details"
+                           asp-route-id="@p.RowKey">
+                            View
+                        </a>
+
+                        <!-- ADD TO CART (CUSTOMER ONLY) -->
+                    @if (role == "Customer")
+                        {
+                            <form asp-controller="Cart" asp-action="Add" method="post" class="m-0">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@p.RowKey" />
+                                <button class="btn btn-sm btn-outline-light">
+                                    <i class="bi bi-bag-plus"></i>
+                                </button>
+                            </form>
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    }
+
+</div>

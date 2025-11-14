@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ABCRetailByRH.Controllers.OrdersController.GroupedOrderVm>
+
+@{
+    ViewData["Title"] = "My Orders";
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-receipt-cutoff"></i></div>
+    <div>
+        <h1 class="lux-page-title">My Orders</h1>
+        <p class="lux-page-sub">Track your purchases and payment submissions</p>
+    </div>
+</div>
+
+@if (TempData["Msg"] is string m)
+{
+    <div class="alert-slim mt-3">@m</div>
+}
+
+<div class="orders-card mt-3">
+
+    <div class="table-responsive">
+        <table class="table table-dark table-hover align-middle mb-0">
+
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Items</th>
+                    <th>Order Date</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var o in Model)
+                {
+                    string statusClass = o.Status switch
+                    {
+                        "Submitted" => "badge-chip status-submitted",
+                        "Processing" => "badge-chip status-processing",
+                        "Completed" => "badge-chip status-completed",
+                        "Cancelled" => "badge-chip status-cancelled",
+                        _ => "badge-chip"
+                    };
+
+                    <tr>
+                        <td class="text-accent fw-semibold">@o.OrderId</td>
+                        <td>@o.TotalItems item(s)</td>
+                        <td>@o.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</td>
+                        <td>R @o.TotalAmount</td>
+
+                        <td class="d-flex align-items-center gap-2">
+
+                            <!-- STATUS BADGE -->
+                            <span class="@statusClass">@o.Status</span>
+
+                            <!-- UPLOAD PROOF ICON -->
+                            <a asp-controller="Upload"
+                               asp-action="Index"
+                               asp-route-orderId="@o.OrderId"
+                               class="text-accent"
+                               title="Upload Proof of Payment">
+                                <i class="bi bi-cloud-upload-fill" style="font-size:1.2rem;"></i>
+                            </a>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+
+</div>

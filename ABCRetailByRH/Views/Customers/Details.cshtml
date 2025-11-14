@@ -1,0 +1,44 @@
+﻿@model ABCRetailByRH.Models.AppUser
+@using ABCRetailByRH.Models
+
+@{
+    ViewData["Title"] = Model.Username;
+
+    var header = new SectionHeaderModel(
+        Title: Model.Username,
+        Subtitle: "Customer account details",
+        RightHtml: $"<a href=\"{Url.Action("Index", "Customers")}\" class=\"btn btn-gold\">Back</a>"
+    );
+}
+
+@await Html.PartialAsync("_SectionHeader", header)
+
+<div class="container py-5" style="max-width:760px;">
+
+    <div class="card card-dark p-4">
+
+        <dl class="row mb-4 text-light">
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Phone</dt>
+            <dd class="col-sm-9">@Model.Phone</dd>
+
+            <dt class="col-sm-3">Role</dt>
+            <dd class="col-sm-9">@Model.Role</dd>
+
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">@Model.CreatedAtUtc</dd>
+
+        </dl>
+
+        <div class="d-flex gap-2">
+            <a class="btn btn-gold px-4" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+            <a class="btn btn-outline-danger px-4" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+            <a class="btn btn-outline-light px-4" asp-action="Index">Back</a>
+        </div>
+
+    </div>
+
+</div>

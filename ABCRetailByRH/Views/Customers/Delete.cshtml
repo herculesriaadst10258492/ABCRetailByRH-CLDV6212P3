@@ -1,0 +1,46 @@
+﻿@model ABCRetailByRH.Models.AppUser
+@using ABCRetailByRH.Models
+
+@{
+    ViewData["Title"] = "Delete Customer";
+
+    var header = new SectionHeaderModel(
+        Title: "Delete Customer",
+        Subtitle: "Remove this customer account",
+        RightHtml: $"<a href=\"{Url.Action("Index", "Customers")}\" class=\"btn btn-gold\">Back</a>"
+    );
+}
+
+@await Html.PartialAsync("_SectionHeader", header)
+
+<div class="container py-5" style="max-width:760px;">
+
+    <div class="card card-dark p-4">
+
+        <p class="text-light mb-3">
+            Are you sure you want to delete <strong>@Model.Username</strong>?
+        </p>
+
+        <dl class="row mb-4 text-light">
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">Phone</dt>
+            <dd class="col-sm-9">@Model.Phone</dd>
+
+            <dt class="col-sm-3">Role</dt>
+            <dd class="col-sm-9">@Model.Role</dd>
+        </dl>
+
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="Id" />
+
+            <button class="btn btn-outline-danger px-4">Yes, delete</button>
+            <a class="btn btn-outline-light px-4" asp-action="Index">Cancel</a>
+        </form>
+
+    </div>
+
+</div>

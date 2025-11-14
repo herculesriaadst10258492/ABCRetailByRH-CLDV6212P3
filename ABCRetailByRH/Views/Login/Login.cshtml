@@ -1,0 +1,50 @@
+﻿@model ABCRetailByRH.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="auth-outer">
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <i class="bi bi-shield-lock-fill auth-icon"></i>
+            <h2>Sign In</h2>
+            <p>Welcome back to ABC Retailers</p>
+        </div>
+
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="auth-field">
+                <label>Username</label>
+                <input asp-for="Username" class="auth-input" autocomplete="off" />
+            </div>
+
+            <div class="auth-field">
+                <label>Password</label>
+                <div class="auth-input-wrap">
+                    <input asp-for="Password" id="pwd" type="password" class="auth-input" autocomplete="off" />
+                    <span class="eye-btn" onclick="togglePwd('pwd')">
+                        <i class="bi bi-eye-fill"></i>
+                    </span>
+                </div>
+            </div>
+
+            <button class="auth-btn">Login</button>
+        </form>
+
+        <div class="auth-footer">
+            <a asp-action="Register">Don’t have an account? Register</a>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function togglePwd(id) {
+            const el = document.getElementById(id);
+            el.type = el.type === "password" ? "text" : "password";
+        }
+    </script>
+}

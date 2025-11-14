@@ -1,0 +1,125 @@
+﻿@model ABCRetailByRH.Controllers.OrdersController.OrderDetailsVm
+
+@{
+    ViewData["Title"] = "Order Details";
+    var role = ViewBag.Role as string;
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-receipt"></i></div>
+    <div>
+        <h1 class="lux-page-title">Order @Model.OrderId</h1>
+        <p class="lux-page-sub">Full order summary and payment details</p>
+    </div>
+</div>
+
+<!-- MAIN CARD -->
+<div class="card-dark p-4 mt-3">
+
+    <!-- ORDER SUMMARY -->
+    <div class="mb-4">
+        <h4 class="text-light">Order Information</h4>
+        <hr class="hr-glow" />
+
+        <dl class="row">
+            <dt class="col-sm-3">Order ID</dt>
+            <dd class="col-sm-9 text-accent fw-semibold">@Model.OrderId</dd>
+
+            <dt class="col-sm-3">Customer</dt>
+            <dd class="col-sm-9">@Model.Customer</dd>
+
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">@Model.CreatedAtUtc.ToString("yyyy-MM-dd HH:mm")</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">
+                @{
+                    string statusClass = Model.Status switch
+                    {
+                        "Submitted" => "badge-chip status-submitted",
+                        "Processing" => "badge-chip status-processing",
+                        "Completed" => "badge-chip status-completed",
+                        "Cancelled" => "badge-chip status-cancelled",
+                        _ => "badge-chip"
+                    };
+                }
+                <span class="@statusClass">@Model.Status</span>
+            </dd>
+
+            <dt class="col-sm-3">Payment Proof</dt>
+            <dd class="col-sm-9">
+                @if (!string.IsNullOrWhiteSpace(Model.ContractFileName))
+                {
+                    <a asp-controller="Upload"
+                       asp-action="Download"
+                       asp-route-name="@Model.ContractFileName"
+                       class="btn btn-outline-light btn-sm">
+                        <i class="bi bi-download"></i> @Model.ContractOriginalName
+                    </a>
+                }
+                else
+                {
+                    <span class="text-secondary fst-italic">No proof uploaded</span>
+                }
+            </dd>
+        </dl>
+    </div>
+
+    <!-- ITEMS TABLE -->
+    <h4 class="text-light">Items</h4>
+    <div class="table-responsive mt-3 mb-4">
+        <table class="table table-dark table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th style="width: 120px;">Quantity</th>
+                    <th style="width: 150px;">Unit Price</th>
+                    <th style="width: 150px;">Line Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>@item.ProductName</td>
+                        <td>@item.Quantity</td>
+                        <td>R @item.UnitPrice</td>
+                        <td>R @item.TotalPrice</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- TOTAL SUMMARY -->
+    <div class="card-dark p-3 mt-2" style="border-radius:12px;">
+        <h5 class="text-light">Order Total</h5>
+        <hr class="hr-glow" />
+        <div class="d-flex justify-content-between">
+            <span class="fw-semibold text-secondary">Grand Total:</span>
+            <span class="fw-bold text-accent" style="font-size:1.2rem;">
+                R @Model.TotalAmount
+            </span>
+        </div>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <div class="mt-4">
+        @if (string.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase))
+        {
+            <a asp-controller="Orders" asp-action="Manage"
+               class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Manage Orders
+            </a>
+        }
+        else
+        {
+            <a asp-controller="Orders" asp-action="MyOrders"
+               class="btn btn-outline-secondary">
+                <i class="bi bi-arrow-left"></i> Back to My Orders
+            </a>
+        }
+    </div>
+
+</div>

@@ -1,0 +1,49 @@
+﻿@model ABCRetailByRH.Models.Product
+@{
+    ViewData["Title"] = "Delete Product";
+}
+
+<!-- HEADER -->
+<div class="lux-page-header">
+    <div class="lux-page-icon"><i class="bi bi-trash"></i></div>
+    <div>
+        <h1 class="lux-page-title">Delete Product</h1>
+        <p class="lux-page-sub">This action cannot be undone</p>
+    </div>
+</div>
+
+<div class="card-dark p-4 mt-3">
+
+    <p class="mb-3">
+        Are you sure you want to delete <strong>@Model.Name</strong>?
+    </p>
+
+    <dl class="row mb-4">
+        <dt class="col-sm-3">Price</dt>
+        <dd class="col-sm-9">R @Model.Price</dd>
+
+        <dt class="col-sm-3">Stock</dt>
+        <dd class="col-sm-9">@Model.Stock</dd>
+
+        <dt class="col-sm-3">Image</dt>
+        <dd class="col-sm-9">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" style="max-width:120px; border-radius:10px;" />
+            }
+            else
+            {
+                <span class="text-secondary">No image</span>
+            }
+        </dd>
+    </dl>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="PartitionKey" />
+        <input type="hidden" asp-for="RowKey" />
+
+        <button class="btn btn-outline-danger">Delete</button>
+        <a asp-action="Index" class="btn btn-link text-secondary">Cancel</a>
+    </form>
+
+</div>
