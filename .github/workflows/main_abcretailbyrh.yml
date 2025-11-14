@@ -1,4 +1,4 @@
-name: Build and deploy ASP.Net Core app to Azure Web App - abcretailbyrh
+name: Build and deploy ASP.Net Core app to Azure Web App - abcretailbyrhweb
 
 on:
   push:
@@ -7,45 +7,45 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup .NET Core
+      - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: '8.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore ./ABCRetailByRH/ABCRetailByRH.csproj
+      - name: Restore
+        run: dotnet restore "./ABCRetailByRH/ABCRetailByRH.csproj"
 
       - name: Build
-        run: dotnet build --configuration Release ./ABCRetailByRH/ABCRetailByRH.csproj --no-restore
+        run: dotnet build "./ABCRetailByRH/ABCRetailByRH.csproj" --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish ./ABCRetailByRH/ABCRetailByRH.csproj -c Release -o published
+        run: dotnet publish "./ABCRetailByRH/ABCRetailByRH.csproj" -c Release -o ./publish
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      - name: Upload artifact for deployment
+        uses: actions/upload-artifact@v3
         with:
-          name: dotnet-app
-          path: published/
+          name: published-app
+          path: ./publish
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
 
     steps:
       - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v3
         with:
-          name: dotnet-app
-          path: .
-      
+          name: published-app
+          path: ./publish
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: abcretailbyrh
+          app-name: abcretailbyrhweb   # ✅ NEW WEB APP NAME
           publish-profile: ${{ secrets.AZUREWEBAPP_PUBLISH_PROFILE }}
-          package: .
+          package: ./publish
